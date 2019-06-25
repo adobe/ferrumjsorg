@@ -59,10 +59,42 @@
 
 
     <section class="readme usertext">
-        <article><h1>Ferrum</h1>
+        <article><p><a name="ferrum"></a></p>
+<h1>Ferrum</h1>
 <p>Features from the rust language in javascript: Provides Traits/Type classes &amp; an advanced library for working with sequences/iterators in js.</p>
 <p><a href="https://github.com/adobe/ferrum">Github</a><br>
-<a href="https://ferrumjs.org">API Documentation</a></p>
+<a href="https://www.ferrumjs.org">API Documentation</a></p>
+<p><a name="table-of-contents"></a></p>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#ferrum">Introduction</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#status">Status</a></li>
+<li><a href="#usage-features">Usage &amp; Features</a>
+<ol>
+<li><a href="#sequence-iterators">Sequence/Iterators</a>
+<ol>
+<li><a href="#objects-as-sequences">Objects as Sequences</a></li>
+<li><a href="#reverse-currying">Reverse Currying</a></li>
+<li><a href="#pipelining">Pipelining</a></li>
+<li><a href="#lazy-evaluation">Lazy Evaluation</a></li>
+</ol>
+</li>
+<li><a href="#traits-typeclasses">Traits/Typeclasses</a></li>
+<li><a href="#operators-as-functions">Operators as functions</a></li>
+<li><a href="#typing-utilities">Typing utilities</a></li>
+<li><a href="#functional-utilities">Functional utilities</a></li>
+</ol>
+</li>
+<li><a href="#development">Development</a>
+<ol>
+<li><a href="#build">Build</a></li>
+<li><a href="#test">Test</a></li>
+<li><a href="#lint">Lint</a></li>
+</ol>
+</li>
+</ol>
+<p><a name="status"></a></p>
 <h2>Status</h2>
 <p><a href="https://circleci.com/gh/adobe/ferrum/tree/master"><img src="https://img.shields.io/circleci/project/github/adobe/ferrum/master.svg" alt="CircleCI"></a>
 <a href="https://codecov.io/gh/adobe/ferrum"><img src="https://img.shields.io/codecov/c/github/adobe/ferrum.svg" alt="codecov"></a>
@@ -70,10 +102,12 @@
 <a href="https://github.com/adobe/ferrum/issues"><img src="https://img.shields.io/github/issues/adobe/ferrum.svg" alt="GitHub issues"></a>
 <a href="https://lgtm.com/projects/g/adobe/ferrum"><img src="https://img.shields.io/lgtm/grade/javascript/g/adobe/ferrum.svg?logo=lgtm&amp;logoWidth=18" alt="LGTM Code Quality Grade: JavaScript"></a>
 <a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a></p>
-<h2>Usage</h2>
+<p><a name="usage-features"></a></p>
+<h2>Usage &amp; Features</h2>
 <pre class="prettyprint source lang-bash"><code>$ npm add ferrum
 </code></pre>
-<h3>Sequence</h3>
+<p><a name="sequence-iterators"></a></p>
+<h3>Sequence/Iterators</h3>
 <table>
 <thead>
 <tr>
@@ -119,6 +153,7 @@
 you would expect like <code>map</code>, <code>filter</code>, <code>foldl</code> and many others. In this regard it is very similar
 to libraries like wu.js, lodash or underscore. Ferrum has been written to remedy some of the issues
 in these libraries.</p>
+<p><a name="objects-as-sequences"></a></p>
 <h4>Objects as Sequences</h4>
 <p><code>Ferrum/Sequence</code> has been designed with full iterator support in mind. Generally all functions
 can take iterables/iterators and returns iterators.</p>
@@ -160,6 +195,7 @@ assertSequenceEquals(map(obj, x => x*2), [4, 6]);
 </code></pre>
 <p><code>Lodash</code> and <code>Underscore</code> only support arrays as input &amp; output; <code>wu.js</code> supports iterators as input &amp; output but has no
 support for plain objects.</p>
+<p><a name="reverse-currying"></a></p>
 <h4>Reverse Currying</h4>
 <p><code>Ferrum/Sequence</code> provides many higher order functions. These are functions that take other functions as parameters, like <code>map()</code> or <code>filter()</code>.</p>
 <pre class="prettyprint source lang-js"><code>const {map, filter, assertSequenceEquals} = require('ferrum');
@@ -219,6 +255,7 @@ each(() => {
 module (not very handy either because it is often useful to mix curried and non currying invocations) while lodash
 has opted to make the function the first parameter, delivering good support for currying and not so good support
 for normal function invocation.</p>
+<p><a name="pipelining"></a></p>
 <h4>Pipelining</h4>
 <p><code>Ferrum</code> provides a function called <code>pipe()</code> which – together with currying – can be used to build complex data processing pipelines.
 Pipelines are conceptually the same as the highly successful pipes in bash; the feature is currently being introduced into the javascript
@@ -332,6 +369,7 @@ after chaining has finished. Pipelining will have even less boilerplate when the
 available and pipelining can be used with arbitrary transformation functions, while
 chaining can only be used with functions supported by the library, thus pipelining is much
 more generic &amp; extensible.</p>
+<p><a name="lazy-evaluation"></a></p>
 <h4>Lazy Evaluation</h4>
 <p>Like python iterators, sequences support lazy evaluation. They support it, because lazy evaluation
 is a core feature of javascript es6 iterators.</p>
@@ -355,7 +393,8 @@ assertEquals(list(take(5, primes())), [2, 3, 5, 7, 11]);
 </code></pre>
 <p>Underscore and lodash use arrays instead of iterators, so they have no lazy evaluation support.
 wu uses iterators and thus has full lazy evaluation support.</p>
-<h3>Traits</h3>
+<p><a name="traits-typeclasses"></a></p>
+<h3>Traits/Typeclasses</h3>
 <p><code>Sequence/Traits</code> is the second big feature this library provides; it is a concept borrowed from
 the Rust language. They let you declare &amp; document a generic interface; like the <code>sequence</code> concept
 above they are not an entirely new concept; while sequence is a library designed to make working
@@ -498,7 +537,8 @@ party types, built in types and even null, undefined and plain objects without
 modifying these types.
 They even let you write generic adapters, implementing traits for entire groups
 of traits at once.</p>
-<h3>Ops</h3>
+<p><a name="operators-as-functions"></a></p>
+<h3>Operators as functions</h3>
 <p><code>Ferrum/Ops</code> provides all of the JS operators and some extra boolean operators as curryable functions.</p>
 <pre class="prettyprint source lang-js"><code>const {plus, and, not, is, xor, map, list} = require('ferrum');
 
@@ -508,6 +548,7 @@ not(1); // => False
 is(2, 2); // => True
 xor(True, False); // => True
 </code></pre>
+<p><a name="typing-utilities"></a></p>
 <h3>Typing utilities</h3>
 <p>Ferrum provides utilities for working with types that can be safely
 used with null and undefined.</p>
@@ -527,6 +568,7 @@ typename(type(undefined)); // => &quot;undefined&quot;
 </code></pre>
 <p>The usual strategy of using <code>value.constructor</code> and <code>value.constructor.name</code>
 yields errors for <code>null</code> &amp; <code>undefined</code>.</p>
+<p><a name="functional-utilities"></a></p>
 <h3>Functional Utilities</h3>
 <pre class="prettyprint source lang-js"><code>const {curry, pipe, filter, isdef, uniq, map, plus} = require('ferrum');
 
@@ -543,13 +585,17 @@ const pair = curry('pair', (a, b) => [a, b]);
 pair(1,2); // => [1,2]
 pair(2)(1); // => [1,2]
 </code></pre>
+<p><a name="development"></a></p>
 <h2>Development</h2>
+<p><a name="build"></a></p>
 <h3>Build</h3>
 <pre class="prettyprint source lang-bash"><code>$ npm install
 </code></pre>
+<p><a name="test"></a></p>
 <h3>Test</h3>
 <pre class="prettyprint source lang-bash"><code>$ npm test
 </code></pre>
+<p><a name="lint"></a></p>
 <h3>Lint</h3>
 <pre class="prettyprint source lang-bash"><code>$ npm run lint
 </code></pre></article>
@@ -567,7 +613,7 @@ pair(2)(1); // => [1,2]
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 25 2019 13:04:02 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Tue Jun 25 2019 13:43:36 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
