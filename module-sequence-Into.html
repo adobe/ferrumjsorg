@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Assign - Documentation</title>
+    <title>Into - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Assign</h1>
+    <h1 class="page-title">Into</h1>
     
 
     
@@ -47,9 +47,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-stdtraits.html">stdtraits</a>~</span>
+            <span class="ancestors"><a href="module-sequence.html">sequence</a>~</span>
         
-        Assign
+        Into
         </h2>
         
     
@@ -66,7 +66,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="stdtraits.js.html">stdtraits.js</a>, <a href="stdtraits.js.html#line925">line 925</a>
+        <a href="sequence.js.html">sequence.js</a>, <a href="sequence.js.html#line879">line 879</a>
     </li></ul></dd>
     
 
@@ -105,16 +105,51 @@
 
 
             
-                <div class="description usertext"><p>Trait to as­sign a value in a con­tainer like type.</p>
-<p>Im­ple­men­ted for Ob­ject, String, Ar­ray, Map.</p>
+                <div class="description usertext"><p>Into can be used to turn se­quences back into other types.</p>
+<p>into is the in­verse of <code>iter()</code>, mean­ing that tak­ing the res­ult
+of <code>iter()</code> and call­ing <code>into()</code>, yields the ori­ginal value.</p>
+<p>So in a purely func­tional lan­guage, <code>into(iter(v))</code> would be a
+no-op; since we are in javas­cript, this es­sen­tially im­ple­ments
+a poor mans shal­low copy for some types</p>
+<pre class="prettyprint source"><code>const shal­low­copy = (v) =&gt; into(v, v.con­structor);
+</code></pre>
 <h1>In­ter­face</h1>
-<p><code>(c: Con­tainer, v: Value, k: Key) =&gt; void</code>.</p>
+<p>`(T: Type/​Func­tion, v: Se­quence) =&gt; r: T</p>
 <h1>Laws</h1>
 <ul>
-<li>Must not be im­ple­men­ted for set-like data struc­tures</li>
+<li><code>into(v, type(v)) &lt;=&gt; shal­low­clone(v)</code></li>
 </ul>
-<h1>Spe­cial­iz­a­tion Notes</h1>
-<p>No im­ple­ment­a­tion provided for String since String is read only.</p></div>
+<h1>Spe­cial­iz­a­tion notes</h1>
+<p>String: Uses to­String() on each value from the se­quence
+and con­cat­en­ates them into one string...
+Ob­ject: Ex­pects key/​value pairs; the keys must be strings;
+se­quences con­tain­ing the same key mul­tiple times and se­quences
+with bad key/​value pairs are con­sidered to be un­defined be­ha­viour.
+The key/​value pairs may be se­quences them­selves.
+Map: Same rules as for ob­ject.
+Set: Refer to ht­tps://​de­veloper.moz­illa.org/​en-US/​docs/​Web/​JavaS­cript/​Ref­er­ence/​Glob­al_Ob­jects/​Set</p>
+<h1>Ex­amples</h1>
+<p>Prac­tical uses of into in­clude con­vert­ing between types; e.g:</p>
+<pre class="prettyprint source"><code>into({foo:  42, bar: 23}, Map) # Map { 'foo' =&gt; 42, 'bar' }
+into(["foo", " bar"], String) # "foo bar"
+into([1,1,2,3,4,2], Set) # Set(1,2,3,4)
+</code></pre>
+<p>Into is also use­ful to trans­form val­ues us­ing the func­tions
+in this class:</p>
+<pre class="prettyprint source"><code># Re­move odd num­bers from a set
+const st = new Set([1,1,2,2,3,4,5]);
+into(fil­ter(st, n =&gt; n % 2 == 0), Set) # Set(2,4)
+
+# Re­move a key/​value pair from an ob­ject
+const obj = {foo: 42, bar: 5};
+into(fil­ter(obj, ([k, v]) =&gt; k !== 'foo'), Obj)
+# yields {bar: 5}
+</code></pre>
+<p>It can be even used for more com­plex use cases:</p>
+<pre class="prettyprint source"><code># Merge mul­tiple key/​value con­tain­ers into one se­quence:
+const seq = con­cat([[99, 42]], new Map(true, 23), {bar: 13});
+into(seq, Map) # Map( 99 =&gt; 42, true =&gt; 23, bar =&gt; 13 )
+</code></pre></div>
             
 
             
