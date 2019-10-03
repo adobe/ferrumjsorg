@@ -626,7 +626,7 @@ span.param-type, .params td .param-type, .param-type dd {
   display: block;
 }
 
-@media only screen and (max-width: 680px) { 
+@media only screen and (min-width: 680px) { 
     .nav-trigger:checked ~ .overlay {
       display: none;
     }
