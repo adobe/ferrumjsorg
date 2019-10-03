@@ -589,7 +589,8 @@ span.param-type, .params td .param-type, .param-type dd {
 /* Minus */
 .nav-trigger:checked + label {
   -webkit-transform: scale(0.75);
-          transform: scale(0.75);
+          transform: scale(0.75);  
+  background: #2e2e2e;
 }
 
 /* × and + */
@@ -623,6 +624,12 @@ span.param-type, .params td .param-type, .param-type dd {
 
 .nav-trigger:checked ~ .overlay {
   display: block;
+}
+
+@media only screen and (max-width: 680px) { 
+    .nav-trigger:checked ~ .overlay {
+      display: none;
+    }
 }
 
 .nav-trigger {
@@ -677,7 +684,11 @@ html[data-search-mode] .level-hide {
     position: fixed;
     top: 1.5em;
     right: 0;
-    z-index: 2;
+    z-index: 2;    
+    padding: 2rem 1rem;
+    box-shadow: 0 0 8px #0000001f;    
+    background: white;    
+    opacity: 1;
   }
 
   #main {
