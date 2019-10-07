@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Equals - Documentation</title>
+    <title>Global - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Equals</h1>
+    <h1 class="page-title">Global</h1>
     
 
     
@@ -47,9 +47,7 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-stdtraits.html">stdtraits</a>~</span>
         
-        Equals
         </h2>
         
     
@@ -63,11 +61,6 @@
 
 <dl class="details">
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="stdtraits.js.html">stdtraits.js</a>, <a href="stdtraits.js.html#line364">line 364</a>
-    </li></ul></dd>
     
 
     
@@ -105,79 +98,6 @@
 
 
             
-                <div class="description usertext"><p>Trait to check whether two val­ues are equal.a</p>
-<pre class="prettyprint source"><code>const {equals, eq, uneq, as­ser­tEquals, as­ser­tUneq} = re­quire('fer­rum');
-
-// Im­ple­ment­ing this type
-class Bar {
-  con­structor(foo, bang) {
-    this.foo = foo;
-    this.bang = bang;
-  }
-
-  [Equals.sym](a, b) {
-    re­turn b in­stanceof Bar
-        &amp;&amp; eq(a.foo, b.foo)
-        &amp;&amp; eq(a.bang, b.bang);
-  }
-}
-
-// Or al­tern­at­ively
-Equals.impl(Bar, (a, b) =&gt; {
-  ...
-});
-
-// Test for equal­ity
-eq(new Bar(42, 23), new Bar(42, 23)); // =&gt; true
-eq(new Bar(42, 23), new Bar(0, 0)); // =&gt; falseAA
-
-uneq(4, 3); // =&gt; true
-uneq(4, 4); // =&gt; false
-
-as­ser­tEquals({}, {}, 'Val­ues where dif­fer­ent!'); // OK!
-as­ser­tEquals({}, {foo: 42}, 'Val­ues where dif­fer­ent!'); // As­ser­tion Er­ror!
-
-as­ser­tUneq([], [{}], 'Val­ues where the same'); // OK!
-as­ser­tUneq([], [], 'Val­ues where the same'); // As­ser­tion Er­ror!
-</code></pre>
-<p>Nor­mally this trait should not be used dir­ectly; con­sider us­ing
-<code>eq()</code> in­stead.</p>
-<p>This trait should be used only in cases where <code>===</code>/<code>is()</code> is too
-strict. Equals is for cases in which the con­tent of two vari­ables
-or data struc­tures is the same/​se­mantic­ally equi­val­ent.</p>
-<h1>In­ter­face</h1>
-<p><code>(value1: Any, value2: Any) =&gt; r: Boolean</code></p>
-<h1>Laws</h1>
-<ul>
-<li><code>Equals.in­voke(a, b) &lt;=&gt; Equals.in­voke(b, a)</code></li>
-</ul>
-<p>This law seems trivial at first, but one ac­tu­ally needs to take some
-care to make this work: The trait re­solves to the im­ple­ment­a­tion for
-the <strong>first ar­gu­ment</strong>!
-So <code>Equals.in­voke(a: Num­ber, b: String)</code> and <code>Equals.in­voke(a: String, b: Num­ber)</code>
-will ac­tu­ally re­solve to two dif­fer­ent im­ple­ment­a­tions.
-The easi­est way to make this work is just to add a check <code>(a, b) =&gt; type(b) === Num­ber</code>
-to the im­ple­ment­a­tion for num­ber and adding an equi­val­ent check in string.
-If com­par­ing across types is ac­tu­ally de­sired (and might re­turn <code>true</code>),
-I sug­gest us­ing the same code for both im­ple­ment­a­tions: Con­sider the fol­low­ing
-con­trive ex­amples:</p>
-<pre class="prettyprint source"><code>Equals.impl(Num­ber, (a, b) =&gt;
-  type(b) === (String || type(b) === Num­ber)
-  &amp;&amp; a.to­String() === b.to­String());
-Equals.impl(String, (a, b) =&gt;
-  type(b) === (String || type(b) === Num­ber)
-  &amp;&amp; a.to­String() === b.to­String());
-</code></pre>
-<h1>Spe­cial­iz­a­tion notes</h1>
-<p>Ex­tra im­ple­ment­a­tions provided for Date, Reg­Exp, URL and typed ar­rays.</p>
-<p>Note that for sets: <code>eq(new Set([{}]), new Set([{}]))</code> does not hold true,
-since in sets keys and val­ues are the same thing and keys al­ways fol­low <code>===</code>
-se­mantics.</p>
-<p><strong>See:</strong> <a href="module-stdtraits.html#~eq"> eq </a>
-<strong>See:</strong> <a href="module-stdtraits.html#~uneq"> uneq </a>
-<strong>See:</strong> <a href="module-stdtraits.html#~assertEquals"> as­ser­tEquals </a>
-<strong>See:</strong> <a href="module-stdtraits.html#~assertUneq"> as­ser­tUneq </a></p></div>
-            
 
             
         
@@ -198,6 +118,194 @@ se­mantics.</p>
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="takeShort"><span class="type-signature"></span>takeShort<span class="signature">(seq, no)</span><span class="type-signature"> &rarr; {Iterator}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sequence.js.html">sequence.js</a>, <a href="sequence.js.html#line1185">line 1185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Yields an iter­ator of the first <code>no</code> ele­ments in the given
+se­quence; the res­ult­ing iter­ator may con­tain less then <code>no</code>
+ele­ments if the in­put se­quence was shorter than <code>no</code> ele­ments.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>seq</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Sequence</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Any se­quence for which iter() is defined</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>no</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The num­ber of ele­ments to take</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The first ele­ment for which pred re­turns false
+plus the rest of the se­quence.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Iterator</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     
