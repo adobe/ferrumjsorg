@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Shallowclone - Documentation</title>
+    <title>Hashable - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Shallowclone</h1>
+    <h1 class="page-title">Hashable</h1>
     
 
     
@@ -47,9 +47,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-stdtraits.html">stdtraits</a>~</span>
+            <span class="ancestors"><a href="module-hashing.html">hashing</a>~</span>
         
-        Shallowclone
+        Hashable
         </h2>
         
     
@@ -66,7 +66,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="stdtraits.js.html">stdtraits.js</a>, <a href="stdtraits.js.html#line646">line 646</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line711">line 711</a>
     </li></ul></dd>
     
 
@@ -105,44 +105,59 @@
 
 
             
-                <div class="description usertext"><p>Shal­lowly clone an ob­ject.</p>
-<pre class="prettyprint source"><code>const { stric­tEqual: as­sertIs, not­Stric­tEqual: as­sertIs­Not } = re­quire('assert');
-const { Shal­low­clone, shal­low­clone, as­ser­tEquals, Equals, eq } = re­quire('fer­rum');
+                <div class="description usertext"><p>The Hash­able in­ter­face must be im­ple­men­ted by any ob­ject that
+can be hashed.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const {
+  Hash­able, bytes2hex, hash­Dir­ectly, hashUn­ordered­With, iter,
+  hash­With, hex2­bytes, ran­dom­Build­Hasher, curry, builder,
+} = re­quire('fer­rum');
 
-class Bar {
-  con­structor(foo, bang) {
-    this.foo = foo;
-    this.bang = bang;
+class Un­ordered­Pair {
+  con­structor(fst, scd) {
+    Ob­ject.as­sign(this, { fst, scd });
   }
 
-  [Shal­low­clone.sym]() {
-    re­turn new Bar(this.foo, this.bang);
+  [Hash­able.sym](hasher) {
+    // It is a best prac­tice to start any con­tainer with a uuid
+    // and the con­tainer size, so dif­fer­ently sized con­tain­ers
+    // and con­tain­ers of dif­fer­ent types pro­duce dif­fer­ent hashes.
+    // We could sup­ply uuid &amp; the size without bytes2hex or hash­Dir­ectly,
+    // but us­ing those has two ad­vant­ages: (1) They are faster and
+    // (2) us­ing them by­passes any spe­cial be­ha­viour in the Hasher
+    // defined for num­bers or strings.
+    // We only want that spe­cial be­ha­viour to be  used on ac­tual con­tent
+    // not the header of our type
+    hasher.up­date(hex2­bytes('d5b­b31067ea846c197d­cac3cae48f327'));
+    hasher.up­date(hash­Dir­ectly(2));
+
+    // Since we're a Un­ordered­Pair we want the or­der of the ele­ments
+    // to not mat­ter so we should use hashUn­ordered­With. We use the
+    // hash­er's build­Hasher in case that im­ple­ments any spe­cial be­ha­viour.
+    // If we did not need or­der in­de­pend­ence, we would just it­er­ate over the
+    // ele­ments: `each(this, (v) =&gt; hasher.up­date(v))`
+    hasher.up­date(hashUn­ordered­With(this, hasher.build­Hasher));
   }
 
-  [Equals.sym](otr) {
-    re­turn eq(this.foo, otr.foo) &amp;&amp; eq(this.bar, otr.bar);
+  [Sym­bol.iter­ator]() {
+    re­turn iter([this.fst, this.scd]);
   }
-}
+};
 
-const a = new Bar({foo: 42}, {bar: 5});
-const b = shal­low­clone(a);
+Un­ordered­Pair.new = curry('Un­ordered­Pair.new', builder(Un­ordered­Pair));
 
-as­ser­tEquals(a, b);
-as­sertIs­Not(a, b);
-
-a.foo.foo = 5;
-as­sertIs(b.foo.foo, 5);
+const h = hash­With(ran­dom­Build­Hasher());
+as­sert.stric­tEqual(
+  bytes2hex(h(Un­ordered­Pair.new({}, 42))),
+  bytes2hex(h(Un­ordered­Pair.new({}, 42))));
 </code></pre>
-<h1>In­ter­face</h1>
-<p><code>(x: The­Value) =&gt; r: The­Value</code></p>
-<h1>Laws</h1>
+<p><strong>By de­fault im­ple­men­ted for:</strong> String, Num­ber, Boolean, Reg­Exp,
+Date, Sym­bol, Func­tion, null, un­defined, typed ar­rays, URL, Set,
+Map, Ob­ject</p>
+<h1>Ver­sion his­tory</h1>
 <ul>
-<li><code>x !== r</code></li>
-<li><code>get(r, k) === get(x, k)</code> for any k.</li>
-</ul>
-<h1>Im­ple­ment­a­tion Notes</h1>
-<p>No-Op im­ple­ment­a­tions are provided for read only prim­it­ive types.</p>
-<p><strong>See:</strong> <a href="module-stdtraits.html#~shallowclone"> shal­low­clone </a></p></div>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul></div>
             
 
             

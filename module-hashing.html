@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>op - Documentation</title>
+    <title>hashing - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,7 +34,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">op</h1>
+    <h1 class="page-title">hashing</h1>
     
 
     
@@ -57,7 +57,11 @@
         <div class="container-overview">
         
             
-                <div class="description usertext"><p>Provides com­mon javas­cript op­er­at­ors as curry­able func­tions.</p></div>
+                <div class="description usertext"><p>Hash tables and hash­ing ob­jects.</p>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul></div>
             
 
             
@@ -71,7 +75,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line13">line 13</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -147,8 +151,34 @@
     
 
     
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-hashing-DefaultHasher.html">DefaultHasher</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-hashing-HashMap.html">HashMap</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-hashing-HashSet.html">HashSet</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-hashing-UnorderedHasher.html">UnorderedHasher</a></dt>
+            <dd></dd>
+        </dl>
     
     
+    		
+	    <h3 class="subsection-title">Interfaces</h3>		
+	
+	    <dl>		
+	        <dt><a href="module-hashing-Hashable.html">Hashable</a></dt>		
+	        <dd></dd>		
+	    		
+	        <dt><a href="module-hashing-Hasher.html">Hasher</a></dt>		
+	        <dd></dd>		
+	    </dl>		
+	
 
      
 
@@ -164,7 +194,7 @@
 
     
 
-    <h4 class="name" id="~aint"><span class="type-signature">(inner) </span>aint<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~bytes2hex"><span class="type-signature">(inner) </span>bytes2hex<span class="signature">(buf, T)</span><span class="type-signature"> &rarr; {T}</span></h4>
 
     
 
@@ -176,7 +206,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line250">line 250</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line101">line 101</a>
     </li></ul></dd>
     
 
@@ -216,22 +246,24 @@
 
 
 <div class="description usertext">
-    <p><code>!==</code> as a func­tion</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { as­sertSequenceEquals, aint, fil­ter, pipe } = re­quire('fer­rum');
+    <p>Con­vert Uint8Ar­ray into a hex en­coded string.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { bytes2hex, hash } = re­quire('fer­rum');
 
-as­sertIs(aint(42, 42), false);
-as­sertIs(aint(42)(42), false);
-as­sertIs(aint(42, ""), true);
-as­sertIs(aint(42)(""), true);
-as­sertIs(aint({}, {}), true); // Can only suc­cess­fully com­pare prim­it­ives
-as­sertIs(aint({})({}), true);
+// You can use this to de­rive a string value from hashes
+as­sert.stric­tEqual(
+  bytes2hex(hash({ foo: "Hello World" })),
+  "8c363e9e1b­cab­de7");
 
-// Re­move the value 42 from the list
-as­sertSequenceEquals(
-  fil­ter([1,2,3,4,42,5,24], aint(42)),
-  [1,2,3,4,5,24]);
+// Which is use­ful be­cause now the === op­er­ator works prop­erly.
+// (=== on Uint8Ar­ray com­pares by iden­tity, not by con­tent)
+as­sert(hash(1) !== hash(1));
+as­sert(bytes2hex(hash(1)) === bytes2hex(hash(1)));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -269,13 +301,13 @@ as­sertSequenceEquals(
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>buf</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">Uint8Array</span>
 
 
             
@@ -285,20 +317,20 @@ as­sertSequenceEquals(
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The buf­fer to con­vert into hex</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>b</code></td>
+                <td class="name"><code>T</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">B</span>
+<span class="param-type">function</span>
 
 
             
@@ -308,7 +340,7 @@ as­sertSequenceEquals(
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The tar­get type</p></td>
         </tr>
 
     
@@ -341,7 +373,7 @@ as­sertSequenceEquals(
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">T</span>
 
 
     </dd>
@@ -356,7 +388,7 @@ as­sertSequenceEquals(
 
     
 
-    <h4 class="name" id="~and"><span class="type-signature">(inner) </span>and<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {A|B}</span></h4>
+    <h4 class="name" id="~defaultBuildHasher"><span class="type-signature">(inner) </span>defaultBuildHasher<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
 
     
 
@@ -368,7 +400,7 @@ as­sertSequenceEquals(
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line44">line 44</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line416">line 416</a>
     </li></ul></dd>
     
 
@@ -408,15 +440,27 @@ as­sertSequenceEquals(
 
 
 <div class="description usertext">
-    <p>The <code>&amp;&amp;</code> op­er­ator as a func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { and } = re­quire('fer­rum');
+    <p>This is really just a wrap­per for De­faultHasher.new()
+that needs to be in­voked twice. While it really does noth­ing
+of in­terest, it is provided so it can be used as a drop in re­place­ment
+for other build­Hasher con­struct­ors like ran­dom­Build­Hasher.</p>
+<p>A Hasher is an ob­ject that im­ple­ments the Hasher in­ter­face (e.g.
+De­faultHasher).  A build­Hasher is a nul­lary (zero para­meter func­tion)
+con­structor for a Hasher (e.g. De­faultHasher.new). A gen­Build­Hasher
+pro­duces a build­Hasher; this func­tion is a gen­Build­Hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { hash­With, bytes2hex, de­fault­Build­Hasher, hash } = re­quire('fer­rum');
 
-as­sertIs(and("",   true),   "");
-as­sertIs(and(true)(""),     "");
-as­sertIs(and(true, 42),     42);
-as­sertIs(and(42)(true),     42);
+const h1 = hash({ foo: [1, 2] });
+const h2 = hash­With({ foo: [1, 2] }, de­fault­Build­Hasher());
+const h3 = de­fault­Build­Hasher()().up­date({ foo: [1, 2] }).di­gest();
+as­sert.stric­tEqual(bytes2hex(h1), bytes2hex(h2));
+as­sert.stric­tEqual(bytes2hex(h1), bytes2hex(h3));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -427,78 +471,6 @@ as­sertIs(and(42)(true),     42);
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>a</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">A</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -518,6 +490,10 @@ as­sertIs(and(42)(true),     42);
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>De­faultHasher.new</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -526,10 +502,7 @@ as­sertIs(and(42)(true),     42);
     </dt>
     <dd>
         
-<span class="param-type">A</span>
-|
-
-<span class="param-type">B</span>
+<span class="param-type">function</span>
 
 
     </dd>
@@ -544,7 +517,7 @@ as­sertIs(and(42)(true),     42);
 
     
 
-    <h4 class="name" id="~is"><span class="type-signature">(inner) </span>is<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hash"><span class="type-signature">(inner) </span>hash<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -556,7 +529,7 @@ as­sertIs(and(42)(true),     42);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line221">line 221</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line243">line 243</a>
     </li></ul></dd>
     
 
@@ -596,25 +569,18 @@ as­sertIs(and(42)(true),     42);
 
 
 <div class="description usertext">
-    <p><code>===</code> as a func­tion</p>
-<p>See <a href="./module-stdtraits.html#~eq">eq()</a> for a con­tent aware com­par­ison func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const {is, count, fil­ter, pipe} = re­quire('fer­rum');
+    <p>Cal­cu­lates the hash of the given value us­ing the de­fault hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const { hash, De­faultHasher, bytes2hex } = re­quire('fer­rum');
 
-as­sertIs(is(42, 42), true);
-as­sertIs(is(42)(42), true);
-as­sertIs(is(42, ""), false);
-as­sertIs(is(42)(""), false);
-as­sertIs(is({}, {}), false); // Can only suc­cess­fully com­pare prim­it­ives
-as­sertIs(is({})({}), false);
-
-// Count how many times the value `42` oc­curs in the list
-const cnt = pipe(
-  [42, 23, 1, 4, 17, 22, 42],
-  fil­ter(is(42)),
-  count);
-as­sertIs(cnt, 2);
+as­sert.stric­tEqual(
+  bytes2hex(hash({ foo: [1, 2] })),
+  bytes2hex(De­faultHasher.new().up­date({ foo: [1, 2] }).di­gest()));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -652,13 +618,13 @@ as­sertIs(cnt, 2);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">*</span>
 
 
             
@@ -668,30 +634,7 @@ as­sertIs(cnt, 2);
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>Any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -724,7 +667,7 @@ as­sertIs(cnt, 2);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -739,7 +682,7 @@ as­sertIs(cnt, 2);
 
     
 
-    <h4 class="name" id="~mul"><span class="type-signature">(inner) </span>mul<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="~hashDirectly"><span class="type-signature">(inner) </span>hashDirectly<span class="signature">()</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -751,7 +694,7 @@ as­sertIs(cnt, 2);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line310">line 310</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line609">line 609</a>
     </li></ul></dd>
     
 
@@ -791,22 +734,35 @@ as­sertIs(cnt, 2);
 
 
 <div class="description usertext">
-    <p>The <code>*</code> op­er­ator as a func­tion:</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { as­sertSequenceEquals, mul, map } = re­quire('fer­rum');
+    <p>Con­vert ba­sic data types into byte se­quences.</p>
+<p>The fol­low­ing seri­al­iz­a­tion rules are used:</p>
+<ul>
+<li>Typed ar­rays into their little en­dian rep­res­ent­a­tion</li>
+<li>Strings as UTF-8</li>
+<li>As a single ele­ment <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array">Float64Ar­ray</a>.</li>
+<li><code>null</code> as <code>hex2­bytes('6218e­f48d321422­fa9b4416563903f05')</code></li>
+<li><code>un­defined</code> as <code>hex2­bytes('0308394d20384acda38432c81d0654ed')</code></li>
+<li><code>true</code> as <code>hex2­bytes('24817a77c9374571a9469a92­faed50b3')</code></li>
+<li><code>false</code> as <code>hex2­bytes('74070422b­b654cf788c9­be­f90900a8f2')</code>,</li>
+</ul>
+<p>Other types cur­rently res­ult in an er­ror, but fur­ther types may be
+ad­ded in the fu­ture.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { hash, hash­Dir­ectly, bytes2hex, hex2­bytes } = re­quire('fer­rum');
 
-as­sertIs(mul(3, 4), 12)
-as­sertIs(mul(4)(3), 12);
-as­sertIs(mul(10, 1/​2), 5); // Can also be used for di­vi­sion
-as­sertIs(mul(1/​2)(10), 5);
+const h1 = hash(hash­Dir­ectly(0));
+const h2 = hash(hex2­bytes('0000000000000000'));
+as­sert.stric­tEqual(bytes2hex(h1), bytes2hex(h2));
 
-// Di­vide each ele­ment in the list by two
-as­sertSequenceEquals(
-  map([2, 4, 6, 8], mul(1/​2)),
-  [1, 2, 3, 4]);
+// Without hash­Dir­ectly num­bers are hashed in a more com­plex way
+// that in­volves the use of type tag­ging.
+const h3 = hash(0);
+as­sert.not­Stric­tEqual(bytes2hex(h1), bytes2hex(h3));
 </code></pre>
-<p>NOTE: There is no di­vi­sion func­tion, if you need di­vi­sion just
-do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -826,8 +782,6 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
     <thead>
     <tr>
         
-        <th>Name</th>
-        
 
         <th>Type</th>
 
@@ -844,38 +798,8 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
 
         <tr>
             
-                <td class="name"><code>a</code></td>
-            
 
             <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
             
             </td>
 
@@ -916,7 +840,7 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -931,7 +855,7 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
 
     
 
-    <h4 class="name" id="~nand"><span class="type-signature">(inner) </span>nand<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hashmap"><span class="type-signature">(inner) </span>hashmap<span class="signature">(seq)</span><span class="type-signature"> &rarr; {HashMap}</span></h4>
 
     
 
@@ -943,7 +867,7 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line110">line 110</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1592">line 1592</a>
     </li></ul></dd>
     
 
@@ -983,17 +907,18 @@ do this: <code>const div = (a, b) =&gt; mul(a, 1/​b)</code>;</p>
 
 
 <div class="description usertext">
-    <p>NAND as a func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { nand } = re­quire('fer­rum');
+    <p>Con­structs a hashmap from a se­quence</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { hashmap } = re­quire('fer­rum');
 
-as­sertIs(nand(true, 42),    false);
-as­sertIs(nand(true)(42),    false);
-as­sertIs(nand(null, false), true);
-as­sertIs(nand(null)(false), true);
-as­sertIs(nand(true, false), true);
-as­sertIs(nand(true)(false), true);
+const hm = hashmap([[{}, 42], [[], 23]]);
+as­sert.stric­tEqual(hm.size, 2);
+as­sert.stric­tEqual(hm.get({}), 42);
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1031,36 +956,13 @@ as­sertIs(nand(true)(false), true);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>seq</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
+<span class="param-type">Sequence</span>
 
 
             
@@ -1103,7 +1005,7 @@ as­sertIs(nand(true)(false), true);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">HashMap</span>
 
 
     </dd>
@@ -1118,7 +1020,7 @@ as­sertIs(nand(true)(false), true);
 
     
 
-    <h4 class="name" id="~nor"><span class="type-signature">(inner) </span>nor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hashSeq"><span class="type-signature">(inner) </span>hashSeq<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -1130,7 +1032,7 @@ as­sertIs(nand(true)(false), true);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line134">line 134</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line294">line 294</a>
     </li></ul></dd>
     
 
@@ -1170,17 +1072,19 @@ as­sertIs(nand(true)(false), true);
 
 
 <div class="description usertext">
-    <p>NOR as a func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { nor } = re­quire('fer­rum');
+    <p>Hash mul­tiple val­ues us­ing the de­fault hasher.
+This cor­res­ponds to re­peated <code>.up­date()</code> calls.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { hash­Seq, bytes2hex, De­faultHasher } = re­quire('fer­rum');
 
-as­sertIs(nor(true, true),   false);
-as­sertIs(nor(true)(true),   false);
-as­sertIs(nor(false, true),  false);
-as­sertIs(nor(false)(true),  false);
-as­sertIs(nor(false, false), true);
-as­sertIs(nor(false)(false), true);
+as­sert.stric­tEqual(
+  bytes2hex(hash­Seq([{}, [1,2,3]])),
+  bytes2hex(De­faultHasher.new().up­date({}).up­date([1,2,3]).di­gest()));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1218,13 +1122,13 @@ as­sertIs(nor(false)(false), true);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">*</span>
 
 
             
@@ -1234,30 +1138,7 @@ as­sertIs(nor(false)(false), true);
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>Se­quence of any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -1290,7 +1171,7 @@ as­sertIs(nor(false)(false), true);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -1305,7 +1186,7 @@ as­sertIs(nor(false)(false), true);
 
     
 
-    <h4 class="name" id="~not"><span class="type-signature">(inner) </span>not<span class="signature">(a)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hashSeqWith"><span class="type-signature">(inner) </span>hashSeqWith<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -1317,7 +1198,7 @@ as­sertIs(nor(false)(false), true);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line86">line 86</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -1357,13 +1238,20 @@ as­sertIs(nor(false)(false), true);
 
 
 <div class="description usertext">
-    <p>The <code>!</code> as a func­tion</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { not } = re­quire('fer­rum');
+    <p>Hash mul­tiple val­ues us­ing a cus­tom build­Hasher.
+This cor­res­ponds to re­peated <code>.up­date()</code> calls.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const { hash­SeqWith, bytes2hex, ran­dom­Build­Hasher } = re­quire('fer­rum');
 
-as­sertIs(not(42),   false);
-as­sertIs(not(null), true);
+const bh = ran­dom­Build­Hasher();
+as­sert.stric­tEqual(
+  bytes2hex(hash­SeqWith([{}, [1,2,3]], bh)),
+  bytes2hex(bh().up­date({}).up­date([1,2,3]).di­gest()));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1401,13 +1289,13 @@ as­sertIs(not(null), true);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">*</span>
 
 
             
@@ -1417,7 +1305,7 @@ as­sertIs(not(null), true);
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Se­quence of any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -1450,7 +1338,7 @@ as­sertIs(not(null), true);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -1465,7 +1353,7 @@ as­sertIs(not(null), true);
 
     
 
-    <h4 class="name" id="~or"><span class="type-signature">(inner) </span>or<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {A|B}</span></h4>
+    <h4 class="name" id="~hashset"><span class="type-signature">(inner) </span>hashset<span class="signature">(seq)</span><span class="type-signature"> &rarr; {HashMap}</span></h4>
 
     
 
@@ -1477,7 +1365,7 @@ as­sertIs(not(null), true);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line66">line 66</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1922">line 1922</a>
     </li></ul></dd>
     
 
@@ -1517,15 +1405,18 @@ as­sertIs(not(null), true);
 
 
 <div class="description usertext">
-    <p>The <code>||</code> op­er­ator as a func­tion</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { or } = re­quire('fer­rum');
+    <p>Con­structs a hash­set from a se­quence</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const { hash­set } = re­quire('fer­rum');
 
-as­sertIs(or(42, false), 42);
-as­sertIs(or(false)(42), 42);
-as­sertIs(or(5, true),   5);
-as­sertIs(or(true)(5),   5);
+const hm = hash­set([32, {}, 42, []]);
+as­sert.stric­tEqual(hm.size, 4);
+as­sert(hm.has([]));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1563,36 +1454,13 @@ as­sertIs(or(true)(5),   5);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>seq</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
+<span class="param-type">Sequence</span>
 
 
             
@@ -1635,10 +1503,7 @@ as­sertIs(or(true)(5),   5);
     </dt>
     <dd>
         
-<span class="param-type">A</span>
-|
-
-<span class="param-type">B</span>
+<span class="param-type">HashMap</span>
 
 
     </dd>
@@ -1653,7 +1518,7 @@ as­sertIs(or(true)(5),   5);
 
     
 
-    <h4 class="name" id="~plus"><span class="type-signature">(inner) </span>plus<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Number|String}</span></h4>
+    <h4 class="name" id="~hashUnordered"><span class="type-signature">(inner) </span>hashUnordered<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -1665,7 +1530,7 @@ as­sertIs(or(true)(5),   5);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line282">line 282</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line352">line 352</a>
     </li></ul></dd>
     
 
@@ -1705,24 +1570,24 @@ as­sertIs(or(true)(5),   5);
 
 
 <div class="description usertext">
-    <p>The <code>+</code> op­er­ator as a func­tion:</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { as­sertSequenceEquals, plus, list, map, pipe } = re­quire('fer­rum');
+    <p>Hash mul­tiple val­ues us­ing Un­ordered­Hasher+De­faultHasher.
+This cor­res­ponds to re­peated <code>.up­date()</code> call; the or­der
+does­n't mat­ter.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert');
+const {
+  hash­SeqWith, hashUn­ordered, bytes2hex, un­ordered­Build­Hasher,
+  de­fault­Build­Hasher,
+} = re­quire('fer­rum');
 
-as­sertIs(plus(3, 4), 7);
-as­sertIs(plus(3)(4), 7);
-as­sertIs(plus(3, -4), -1); // Can also be used for sub­trac­tion
-as­sertIs(plus(3)(-4), -1);
-as­sertIs(plus("foo", "bar"), "foobar");
-as­sertIs(plus("bar")("foo"), "foobar");
-
-// Sub­tract one from each ele­ment in the list
-as­sertSequenceEquals(
-  map([1, 2, 3, 4, 5], plus(-1)),
-  [0, 1, 2, 3, 4]);
+as­sert.stric­tEqual(
+  bytes2hex(hashUn­ordered([{}, [1,2,3]])),
+  bytes2hex(hash­SeqWith([[1,2,3], {}],
+    un­ordered­Build­Hasher(de­fault­Build­Hasher()))));
 </code></pre>
-<p>NOTE: There is no sub­tract func­tion, if you need sub­trac­tion just
-neg­ate the value to sub­tract with the  op­er­ator please: <code>const minus = (a, b) =&gt; plus(a, -b)</code></p>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1760,16 +1625,13 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
-|
-
-<span class="param-type">String</span>
+<span class="param-type">*</span>
 
 
             
@@ -1779,33 +1641,7 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-|
-
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>Se­quence of any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -1838,10 +1674,7 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
-|
-
-<span class="param-type">String</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -1856,7 +1689,7 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
 
     
 
-    <h4 class="name" id="~xnor"><span class="type-signature">(inner) </span>xnor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hashUnorderedWith"><span class="type-signature">(inner) </span>hashUnorderedWith<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -1868,7 +1701,7 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line186">line 186</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line383">line 383</a>
     </li></ul></dd>
     
 
@@ -1908,19 +1741,25 @@ neg­ate the value to sub­tract with the  op­er­ator please: <code>const minu
 
 
 <div class="description usertext">
-    <p>XNOR as a func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { xnor } = re­quire('fer­rum');
+    <p>Hash mul­tiple val­ues us­ing Un­ordered­Hasher and a cus­tom build­Hasher.
+This cor­res­ponds to re­peated <code>.up­date()</code> call; the or­der
+does­n't mat­ter.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const {
+  hash­SeqWith, bytes2hex, ran­dom­Build­Hasher,
+  un­ordered­Build­Hasher, hashUn­ordered­With,
+} = re­quire('fer­rum');
 
-as­sertIs(xnor(true, true),   true);
-as­sertIs(xnor(true)(true),   true);
-as­sertIs(xnor(false, false), true);
-as­sertIs(xnor(false)(false), true);
-as­sertIs(xnor(false, true),  false);
-as­sertIs(xnor(true)(false),  false);
-as­sertIs(xnor(true, false),  false);
-as­sertIs(xnor(false)(true),  false);
+const bh = ran­dom­Build­Hasher();
+as­sert.stric­tEqual(
+  bytes2hex(hashUn­ordered­With([{}, [1,2,3]], bh)),
+  bytes2hex(hash­SeqWith([[1,2,3], {}],
+    un­ordered­Build­Hasher(bh))));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -1958,13 +1797,13 @@ as­sertIs(xnor(false)(true),  false);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">*</span>
 
 
             
@@ -1974,30 +1813,7 @@ as­sertIs(xnor(false)(true),  false);
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>Se­quence of any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -2030,7 +1846,7 @@ as­sertIs(xnor(false)(true),  false);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Uint8Array</span>
 
 
     </dd>
@@ -2045,7 +1861,7 @@ as­sertIs(xnor(false)(true),  false);
 
     
 
-    <h4 class="name" id="~xor"><span class="type-signature">(inner) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~hashWith"><span class="type-signature">(inner) </span>hashWith<span class="signature">(v)</span><span class="type-signature"> &rarr; {Uint8Array}</span></h4>
 
     
 
@@ -2057,7 +1873,7 @@ as­sertIs(xnor(false)(true),  false);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="op.js.html">op.js</a>, <a href="op.js.html#line160">line 160</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line269">line 269</a>
     </li></ul></dd>
     
 
@@ -2097,19 +1913,20 @@ as­sertIs(xnor(false)(true),  false);
 
 
 <div class="description usertext">
-    <p>XOR as a func­tion.</p>
-<pre class="prettyprint source lang-js"><code>const { stric­tEqual: as­sertIs } = re­quire('assert');
-const { xor } = re­quire('fer­rum');
+    <p>Cal­cu­lates the hash of the given value us­ing some cus­tom build hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const { hash­With, bytes2hex, ran­dom­Build­Hasher } = re­quire('fer­rum');
 
-as­sertIs(xor(true, true),   false);
-as­sertIs(xor(true)(true),   false);
-as­sertIs(xor(false, false), false);
-as­sertIs(xor(false)(false), false);
-as­sertIs(xor(false, true),  true);
-as­sertIs(xor(true)(false),  true);
-as­sertIs(xor(true, false),  true);
-as­sertIs(xor(false)(true),  true);
+const bh = ran­dom­Build­Hasher();
+const h = hash­With(bh); // hash­With is curry­able
+as­sert.stric­tEqual(
+  bytes2hex(h({ foo: [1, 2] })),
+  bytes2hex(bh().up­date({ foo: [1, 2] }).di­gest()));
 </code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
 </div>
 
 
@@ -2147,13 +1964,13 @@ as­sertIs(xor(false)(true),  true);
 
         <tr>
             
-                <td class="name"><code>a</code></td>
+                <td class="name"><code>v</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">A</span>
+<span class="param-type">*</span>
 
 
             
@@ -2163,30 +1980,7 @@ as­sertIs(xor(false)(true),  true);
 
             
 
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">B</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
+            <td class="description last"><p>Any­thing that im­ple­ments Hash­able</p></td>
         </tr>
 
     
@@ -2219,7 +2013,581 @@ as­sertIs(xor(false)(true),  true);
     </dt>
     <dd>
         
-<span class="param-type">Boolean</span>
+<span class="param-type">Uint8Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~hex2bytes"><span class="type-signature">(inner) </span>hex2bytes<span class="signature">(buf, T)</span><span class="type-signature"> &rarr; {T}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line128">line 128</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Con­vert a hex en­coded string to an Uint8Ar­ray.</p>
+<pre class="prettyprint source lang-js"><code>const { hex2­bytes, as­ser­tEquals } = re­quire('fer­rum');
+
+as­ser­tEquals(
+  hex2­bytes("ff00ff00"),
+  new Uint8Ar­ray([0xff, 0x00, 0xff, 0x00]));
+</code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>buf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Uint8Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The buf­fer to con­vert into hex</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>T</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The tar­get type</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">T</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~randomBuildHasher"><span class="type-signature">(inner) </span>randomBuildHasher<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line483">line 483</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Cre­ate a new build­Hasher us­ing a ran­dom seed.</p>
+<p>This is mostly use­ful as a mit­ig­a­tion against at­tacks like <a href="https://en.wikipedia.org/wiki/Collision_attack">hash­dos</a>.
+Us­ing this is usu­ally a bet­ter choice of de­fault build­Hasher than de­fault­Build­Hasher.</p>
+<p>A Hasher is an ob­ject that im­ple­ments the Hasher in­ter­face (e.g.
+De­faultHasher).  A build­Hasher is a nul­lary (zero para­meter func­tion)
+con­structor for a Hasher (e.g. De­faultHasher.new). A gen­Build­Hasher
+pro­duces a build­Hasher; this func­tion is a gen­Build­Hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const { hash­With, bytes2hex, ran­dom­Build­Hasher, hash } = re­quire('fer­rum');
+
+const r1 = ran­dom­Build­Hasher();
+const r2 = ran­dom­Build­Hasher();
+as­sert.stric­tEqual(
+  bytes2hex(hash­With({ foo: 1 }, r1)),
+  bytes2hex(hash­With({ foo: 1 }, r1)));
+as­sert.not­Stric­tEqual(
+  bytes2hex(hash­With({ foo: 1 }, r1)),
+  bytes2hex(hash­With({ foo: 1 }, r2)));
+</code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>De­faultHasher.new</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~seededBuildHasher"><span class="type-signature">(inner) </span>seededBuildHasher<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line448">line 448</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Cre­ate a new build­Hasher us­ing a seed.</p>
+<p>A Hasher is an ob­ject that im­ple­ments the Hasher in­ter­face (e.g.
+De­faultHasher).  A build­Hasher is a nul­lary (zero para­meter func­tion)
+con­structor for a Hasher (e.g. De­faultHasher.new). A gen­Build­Hasher
+pro­duces a build­Hasher; this func­tion is a gen­Build­Hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const { hash­With, bytes2hex, seeded­Build­Hasher, hash } = re­quire('fer­rum');
+
+const s1 = seeded­Build­Hasher(new Uint8Ar­ray([0, 0, 0, 0, 0, 0, 0, 0]));
+const s2 = seeded­Build­Hasher(new Uint8Ar­ray([0, 0, 0, 0, 0, 0, 0, 1]));
+as­sert.stric­tEqual(
+  bytes2hex(hash­With({ foo: 1 }, s1)),
+  bytes2hex(hash­With({ foo: 1 }, s1)));
+as­sert.not­Stric­tEqual(
+  bytes2hex(hash­With({ foo: 1 }, s1)),
+  bytes2hex(hash­With({ foo: 1 }, s2)));
+</code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>De­faultHasher.new</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~unorderedBuildHasher"><span class="type-signature">(inner) </span>unorderedBuildHasher<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line520">line 520</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Build­Hasher for Un­ordered­Hasher.</p>
+<p>A Hasher is an ob­ject that im­ple­ments the Hasher in­ter­face (e.g.
+De­faultHasher).  A build­Hasher is a nul­lary (zero para­meter func­tion)
+con­structor for a Hasher (e.g. De­faultHasher.new).  A gen­Build­Hasher
+pro­duces a build­Hasher; this func­tion is a gen­Build­Hasher.</p>
+<pre class="prettyprint source lang-js"><code>const as­sert = re­quire('assert')
+const {
+  hash­SeqWith, bytes2hex, ran­dom­Build­Hasher, un­ordered­Build­Hasher, hash
+} = re­quire('fer­rum');
+
+const r1 = ran­dom­Build­Hasher();
+as­sert.stric­tEqual(
+  bytes2hex(hash­SeqWith([23, {}], un­ordered­Build­Hasher(r1))),
+  bytes2hex(hash­SeqWith([{}, 23], un­ordered­Build­Hasher(r1))));
+</code></pre>
+<h1>Ver­sion his­tory</h1>
+<ul>
+<li>1.9.0 Ini­tial im­ple­ment­a­tion</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>De­faultHasher.new</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
 
 
     </dd>
