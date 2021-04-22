@@ -52,7 +52,10 @@
         HashMap
         </h2>
         
-            <div class="class-description usertext"><p>Key/Value container. Similar to the ES6 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>.</p>
+            <div class="class-description usertext"><p>Key/Value container.</p>
+<p>Implements the same interface ES6 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>,
+except that keys are compared based on equality using a hash function and not based on identity.</p>
+<p>Iterates its elements in insertion order.</p>
 <pre class="prettyprint source lang-js"><code>const assert = require('assert');
 const { hashmap } = require('ferrum');
 
@@ -63,6 +66,7 @@ const hm = hashmap([ [{}, 42] ]);
 assert(hm.has({}));
 assert.strictEqual(hm.get({}), 42);
 </code></pre>
+<p>Iteration order is defined to be the order of insertation</p>
 <h1>Version history</h1>
 <ul>
 <li>1.9.0 Initial implementation</li>
@@ -93,7 +97,7 @@ assert.strictEqual(hm.get({}), 42);
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1278">line 1278</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1285">line 1285</a>
     </li></ul></dd>
     
 
@@ -357,7 +361,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1553">line 1553</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1560">line 1560</a>
     </li></ul></dd>
     
 
@@ -515,7 +519,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1568">line 1568</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1575">line 1575</a>
     </li></ul></dd>
     
 
@@ -745,7 +749,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1541">line 1541</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1548">line 1548</a>
     </li></ul></dd>
     
 
@@ -854,7 +858,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1307">line 1307</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1314">line 1314</a>
     </li></ul></dd>
     
 
@@ -944,7 +948,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1434">line 1434</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1441">line 1441</a>
     </li></ul></dd>
     
 
@@ -1101,7 +1105,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1453">line 1453</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1460">line 1460</a>
     </li></ul></dd>
     
 
@@ -1209,7 +1213,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1495">line 1495</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1502">line 1502</a>
     </li></ul></dd>
     
 
@@ -1371,7 +1375,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1378">line 1378</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1385">line 1385</a>
     </li></ul></dd>
     
 
@@ -1532,7 +1536,7 @@ util­izes the ob­ject-hash lib­rary to hash un­known types.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1363">line 1363</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1370">line 1370</a>
     </li></ul></dd>
     
 
@@ -1695,7 +1699,7 @@ users can ac­cess the key as it is stored in the table.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1396">line 1396</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1403">line 1403</a>
     </li></ul></dd>
     
 
@@ -1852,7 +1856,7 @@ users can ac­cess the key as it is stored in the table.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1468">line 1468</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1475">line 1475</a>
     </li></ul></dd>
     
 
@@ -1960,7 +1964,7 @@ users can ac­cess the key as it is stored in the table.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1415">line 1415</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1422">line 1422</a>
     </li></ul></dd>
     
 
@@ -2144,7 +2148,7 @@ users can ac­cess the key as it is stored in the table.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1323">line 1323</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1330">line 1330</a>
     </li></ul></dd>
     
 
@@ -2235,7 +2239,7 @@ users can ac­cess the key as it is stored in the table.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1481">line 1481</a>
+        <a href="hashing.js.html">hashing.js</a>, <a href="hashing.js.html#line1488">line 1488</a>
     </li></ul></dd>
     
 
@@ -2346,7 +2350,7 @@ users can ac­cess the key as it is stored in the table.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Fri Apr 16 2021 17:04:33 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Apr 22 2021 18:36:46 GMT+0200 (Central European Summer Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
