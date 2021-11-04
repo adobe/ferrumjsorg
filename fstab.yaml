@@ -1,2 +1,2 @@
 mountpoints:
-  /: https://github.com/adobe/ferrumjsorg/tree/main/docs
+  /: https://github.com/adobe/ferrumjsorg.git/docs#main
